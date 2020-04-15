@@ -1,29 +1,78 @@
-# drafty
-
-## Project setup
+## Структура статьи
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+{
+  _packed: Boolean,                    // Специальный флажок для меня, всегда true
+  _v: String,                          // Версия редактора, в котором сделаны последние изменения
+  articleSkeleton: Array<Block>,       // Массив блоков с вырванным текстовым пейлоадом
+  articleText: String                  // Текст статьи (берется из всех блоков, разделяется \n)
+}
 ```
 
-### Compiles and minifies for production
+## Пример
 ```
-npm run build
+{
+  "_packed": true,
+  "_v": "drafty-vue^1.0",
+  "articleSkeleton": [
+    {
+      "key": "a7rnk6vuquf",
+      "type": "paragraph",
+      "data": {
+        "style": []
+      }
+    }
+  ],
+  "articleText": ""
+}
 ```
 
-### Run your tests
+## Структура `Block`
 ```
-npm run test
+{
+  key: String,                         // Уникальный render-ключ
+  type: String,                        // Тип блока
+  data: Object                         // Объект данных блока
+}
+```
+> ⚠️ Объект данных, возможно, будет расширяться в будущем. Предсказать поля для будущих типов блоков невозможно.
+
+##  Поля объекта данных на данный момент
+```
+{
+  content: String,                     // Строка для текстовых блоков
+  style: Array<StyleObject>            // Массив стилевых объектов вида
+}
 ```
 
-### Lints and fixes files
+## Структура `StyleObject`
 ```
-npm run lint
+{
+  range: Array,                        // Массив из двух элементов (начало и конец применения стиля),
+  tag: String,                         // Тэг применения стиля (например, b)
+  attrs: Object                        // Объект атрибутов стиля
+}
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Пример
+
+Есть текст
+```
+Съешь этих мягких французских булок, да выпею чаю
+```
+И есть стилевой объект `StyleObject`
+```
+{
+  range: [4,10],                        
+  tag: 'b',                         
+  attrs: {
+    'class': 'px-5',
+    'any-attr': 'random-value'
+  }                        
+}
+```
+После применения стиля верстка станет такой
+```
+Съеш<b class="px-5" any-attr="random-value">ь этих</b> мягких французских булок, да выпею чаю
+```
+А выгядеть будет так  
+Съеш**ь этих** мягких французских булок, да выпею чаю
