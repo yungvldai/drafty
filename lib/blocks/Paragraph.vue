@@ -6,6 +6,8 @@
       @input="handleInput"
       @keydown="handleKeydown"
       @keyup="handleKeyup"
+      @focus="setFocus(true)"
+      @blur="setFocus(false)"
       v-html="render(B)"
       ref="block"
     />
@@ -14,6 +16,7 @@
 
 <script>
 import caretUtils from '../utils/caretUtils';
+import blockUtils from '../utils/blockUtils';
 
 import text from '../mixins/text';
 import style from '../mixins/style';
@@ -26,6 +29,9 @@ export default {
     this.bindStyle(this.B);
   },
   methods: {
+    setFocus(value) {
+      value ? blockUtils.focusBlock(this.B, this.$set) : blockUtils.blurBlock(this.B);
+    },
     render(block) {
       return block.data.content;
     },
@@ -83,10 +89,14 @@ export default {
 }
 </script>
 
-<style scoped>
-.content {
-  min-height: 18px;
-  outline: none;
-  text-align: justify;
+<style scoped lang="scss">
+.paragraph {
+  width: 100%;
+  .content {
+    min-height: 18px;
+    outline: none;
+    text-align: justify;
+    
+  }
 }
 </style>
