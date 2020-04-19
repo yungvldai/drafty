@@ -4,8 +4,12 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "build-bundle": "vue-cli-service build --target lib --name index ./index.js"
   },
+  "files": [
+    "dist/*"
+  ],
   "dependencies": {
     "core-js": "^3.6.4",
     "vue": "^2.6.11"

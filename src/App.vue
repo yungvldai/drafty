@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { Drafty, DraftyState } from '@/../lib/drafty'
+import Drafty, { DraftyState } from '@/../dist/index.umd.min'
 
 export default {
   data: () => ({
