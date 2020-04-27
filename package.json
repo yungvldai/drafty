@@ -1,14 +1,16 @@
 {
-  "name": "drafty",
-  "version": "0.1.0",
-  "private": true,
+  "name": "drafty-vue",
+  "author": "Vlad Ivanov",
+  "version": "1.0.2",
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build-bundle": "vue-cli-service build --target lib --name index ./index.js"
+    "build-bundle": "vue-cli-service build --target lib --name index ./entry.js"
   },
   "files": [
-    "dist/*"
+    "index.js",
+    "index.css"
   ],
   "dependencies": {
     "core-js": "^3.6.4",

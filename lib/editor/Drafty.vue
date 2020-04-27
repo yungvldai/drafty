@@ -4,36 +4,30 @@
       class="block"
       v-for="(block, index) in blocks"
       :key="block.key"
+      :data-render-key="block.key"
     >
-      <div 
-        class="modifier-container" 
-        v-if="block.type === 'paragraph' && block.data.content.length === 0 && block['editor-only'] && block['editor-only'].focus"
-      >
-        <block-modifier 
-          :registered="registered" 
-          :blocks="blocks" 
-          :index="index" 
-        />
-      </div>
       <component 
         v-if="registered.find(x => x.type === block.type)"
         :is="registered.find(x => x.type === block.type).rc" 
         :blocks="blocks"
         :index="index"
         :registered="registered"
+        :options="options"
+        v-on="$listeners"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { registered } from '../drafty';
+import { registered, options } from '../drafty';
 import BlockModifier from './Modifier.vue';
 
 export default {
   props: ['state'],
   data: () => ({
-    registered
+    registered: [ ...registered ],
+    options: { ...options }
   }),
   computed: {
     blocks() {
@@ -51,11 +45,6 @@ export default {
   .block {
     position: relative;
     margin-bottom: 20px;
-    .modifier-container {
-      position: absolute;
-      top: -2px;
-      left: -30px;
-    }
   }
 }
 </style>
